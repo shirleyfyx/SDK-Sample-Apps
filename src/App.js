@@ -6,10 +6,10 @@ import { useEffect } from 'react';
 function App() {
   useEffect(() => {
     //Meeting
-    new Callbridge.Meeting({"domain":"iotum.callbridge.rocks","container":"#meeting_container"}, 5821515, {"name":"Guest","view":"left_side_speaker","tiles":4,"resolution":180,"mute":{"mic":true,"camera":true}});
+    new Callbridge.Meeting({"domain":"iotum.callbridge.rocks","container":"#meeting_container"}, 6387062, {"name":"Guest","view":"left_side_speaker","tiles":4,"resolution":180,"mute":{"mic":true,"camera":true}});
     
     //Livestream
-    new Callbridge.Livestream({"domain":"iotum.callbridge.rocks","container":"#livestream_container"}, 5821515, {"name":"test"});
+    new Callbridge.Livestream({"domain":"iotum.callbridge.rocks","container":"#livestream_container"}, 6387062, {"name":"test"});
     
     //Team
     new Callbridge.Dashboard({"domain":"iotum.callbridge.rocks","container":"#team_container"}, "Team", {});
