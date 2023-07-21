@@ -1,7 +1,7 @@
 {
   "name": "webapp",
   "version": "0.1.0",
-  "homepage": "https://iotum.github.io/iotum-samples/all-widgets",
+  "homepage": "http://iotum.github.io/iotum-samples/all-widgets",
   "private": true,
   "dependencies": {
     "@iotum/callbridge-js": "github:iotum/callbridge-js#v1.0.4",
@@ -17,8 +17,7 @@
     "start": "set HOST=localhost.callbridge.com&&set HTTPS=true&&react-scripts start",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    // "build": "react-scripts build",
-    "build": "react-scripts build && rm -rf docs && mv build docs",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
