@@ -1,7 +1,7 @@
 {
   "name": "webapp",
   "version": "0.1.0",
-  "homepage": "http://iotum.github.io/iotum-samples/all-widgets",
+  "homepage": "https://iotum.github.io/iotum-samples/all-widgets",
   "private": true,
   "dependencies": {
     "@iotum/callbridge-js": "github:iotum/callbridge-js#v1.0.4",
