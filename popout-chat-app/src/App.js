@@ -6,9 +6,8 @@ function App() {
   const [token, setToken] = useState('');
   const [hostId, setHostId] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [showChat, setShowChat] = useState(false);
   const [unreadMessages, setUnreadMessages] = useState(0);
-  const [isLoading, setIsLoading] = useState(true); // Added loading state
+  const [isLoading, setIsLoading] = useState(true); //Loading status of unread messages
 
   const handleTokenChange = (event) => {
     setToken(event.target.value);
@@ -21,7 +20,7 @@ function App() {
   //on submit -> get the number of unread messages 
   const container = document.createElement('div');
   container.style.display = 'none';
-  const fakeWidget = new Callbridge.Dashboard(
+  const invisibleWidget = new Callbridge.Dashboard(
     {
       domain: 'iotum.callbridge.rocks',
       sso: {
@@ -32,8 +31,8 @@ function App() {
     },
     "Team",
   );
-  //event listens for the numbe rof unread messages ONE time 
-  fakeWidget.once('dashboard.UNREAD_MESSAGES', (data) => {
+  //this widget listens for the number of unread messages 
+  invisibleWidget.on('dashboard.UNREAD_MESSAGES', (data) => {
   let sum = 0;
   for (const key in data.rooms) {
     if (data.rooms.hasOwnProperty(key)) {
@@ -41,8 +40,8 @@ function App() {
     }
   }
   setUnreadMessages(sum);
+  //the widget has finished loading the amount of unread messages
   setIsLoading(false);
-  fakeWidget.unload();
   });
   // Hide the form page
   setSubmitted(true);
@@ -50,7 +49,8 @@ function App() {
 
 
   const renderChatWidget = () => {
-    let widget = new Callbridge.Dashboard(
+    //chatWidget is the widget that opens in a new window when you press the chat button
+    let chatWidget = new Callbridge.Dashboard(
           {
             domain: 'iotum.callbridge.rocks',
             sso: {
@@ -62,37 +62,26 @@ function App() {
           "Team",
           { layout: 'full' }
       );
-
-      widget.on('dashboard.UNREAD_MESSAGES', (data) => {
-        let sum = 0;
-        for (const key in data.rooms) {
-          if (data.rooms.hasOwnProperty(key)) {
-            sum += data.rooms[key];
-          }
-        }
-        setUnreadMessages(sum);
-        setShowChat(false);
-      });
   }
 
   if(submitted) {
-  if (isLoading) {
-    return (
-      <div>Loading unread messages...</div> 
-    )
-  }
+    if (isLoading) {
+      return (
+        <div>Loading unread messages...</div> 
+      )
+    }
 
     return (
       <div className={styles.chatContainer}>
         <button className={styles.biggerButton} onClick={() => {
-          setShowChat(true)
+          renderChatWidget()
         }}>Chat</button>
         <span className={styles.badge}>{unreadMessages}</span>
-        {showChat && renderChatWidget()}
       </div>
     );
   }
 
+  //submit SSo token and hostId page: 
   if(!submitted) {
     return (
       <div className="form-wrapper">
