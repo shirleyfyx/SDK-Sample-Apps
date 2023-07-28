@@ -77,7 +77,7 @@ const renderWidget = () => {
     container: container.current,
     },
     'Team',
-    { layout: 'list' }
+    { layout: 'full' }
     );
   }
 
@@ -92,8 +92,7 @@ const renderWidget = () => {
     },
     container: container.current,
     },
-    'Drive',
-    { layout: 'list' }
+    'Drive'
     );
   }
 
@@ -108,8 +107,7 @@ const renderWidget = () => {
     },
     container: container.current,
     },
-    'Contacts',
-    { layout: 'list' }
+    'Contacts'
     );
   }
 }
@@ -123,7 +121,7 @@ useEffect(() => {
   return () => {
     destroyWidget();
   };
-  }, [submitted, showChatWidget, showMeetingWidget, activeTab]);
+  }, [submitted, showChatWidget, showContacts, showDrive]);
 
 
   if (submitted) {
@@ -132,7 +130,7 @@ useEffect(() => {
       <div className={styles.verticalTabContainer}>
       <button onClick={handleChatButtonClick}>Team Chat</button>
       <button onClick={handleDriveButtonClick}>Drive</button>
-      <button onClick={handleContactsButtonClick}>Drive</button>
+      <button onClick={handleContactsButtonClick}>Contacts</button>
       </div>
       <div ref={container} className={styles.widgetContainer}></div>
       </div>
