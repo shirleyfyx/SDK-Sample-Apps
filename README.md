@@ -1,6 +1,7 @@
 # Steps to open one of the sample web apps:
 - Each branch in this repository has the code for a different sample app
 - The url for any sample app is https://iotum.github.io/iotum-samples/[nameOfBranch]
+- Sample apps can be found here https://github.com/iotum/iotum-samples/branches
 
 # Steps to run a sample app on your local computer: 
 1. Change the hostname on your local computer 
