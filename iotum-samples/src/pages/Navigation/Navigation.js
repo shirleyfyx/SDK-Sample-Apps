@@ -6,11 +6,11 @@ const NavigationMenu = () => {
     <div className="nav-container">
       <nav>
         <ul>
-          <li class="nav-button" ><Link to="https://iotum.github.io/iotum-samples/chat-room-list/">ChatRoom</Link></li>
-          <li class="nav-button"><Link to="https://iotum.github.io/iotum-samples/tabbed-dashboard/">TabbedDashboard</Link></li>
-          <li class="nav-button"><Link to="https://iotum.github.io/iotum-samples/simple-meeting/">SimpleMeeting</Link></li>
-          <li class="nav-button"><Link to="https://iotum.github.io/iotum-samples/popout-chat-app/">PopoutChat</Link></li>
-          <li class="nav-button"><Link to="https://iotum.github.io/iotum-samples/list-widget-ui/">ListWidget</Link></li>
+          <li ><Link to="https://iotum.github.io/iotum-samples/chat-room-list/"> <button className="nav-button">Chat Room List App</button> </Link></li>
+          <li><Link to="https://iotum.github.io/iotum-samples/tabbed-dashboard/"> <button className="nav-button">Tabbed Dashboard App</button> </Link></li>
+          <li><Link to="https://iotum.github.io/iotum-samples/simple-meeting/"> <button className="nav-button">Simple Meeting App</button> </Link></li>
+          <li><Link to="https://iotum.github.io/iotum-samples/popout-chat-app/"> <button className="nav-button">Popout Chat App</button> </Link></li>
+          <li><Link to="https://iotum.github.io/iotum-samples/list-widget-ui/"> <button className="nav-button">List Widget UI App</button> </Link></li>
         </ul>
       </nav>
     </div>

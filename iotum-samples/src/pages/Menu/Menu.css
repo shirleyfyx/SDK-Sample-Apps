@@ -2,11 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: sans-serif; 
+    color: rgb(88, 87, 87)
   }
   
   h1 {
     margin-bottom: 20px; 
-    color: #45a049; 
     font-size: 36px;
   }
