@@ -1,0 +1,35 @@
+.nav-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.nav-button {
+    font-size: 20px; 
+    width: auto; 
+    font-weight: bold;
+    margin: 5px 0; /* Adds some space between the buttons */
+    display: inline-block;
+    margin: 50px 0;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F6A978; 
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;  /* Adds rounded corners */
+    display: block;         /* Places each button on a new line */
+    text-align: center;
+    line-height: 1.5;
+}
+
+.nav-button:hover {
+    background-color: #E0976A; /* darken color on hover */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+  }

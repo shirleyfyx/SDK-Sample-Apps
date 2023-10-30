@@ -1,0 +1,12 @@
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif; 
+  }
+  
+  h1 {
+    margin-bottom: 20px; 
+    color: #45a049; 
+    font-size: 36px;
+  }
