@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Menu from "./pages/Menu/Menu.js";
+import Menu from "./pages/HomePage/HomePage.js";
 import NavigationMenu from "./pages/Navigation/Navigation.js";
 
 export const App = () => {

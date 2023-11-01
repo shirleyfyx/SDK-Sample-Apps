@@ -1,10 +1,10 @@
 import React from 'react';
-import './Menu.css';
+import './HomePage.css';
 
 const Menu = () => {
   return (
     <div class="menu-container">
-      <h1>Menu</h1>
+      <h1>Iotum Sample Apps</h1>
     </div>
   );
 }
