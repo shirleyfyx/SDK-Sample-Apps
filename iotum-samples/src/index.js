@@ -1,19 +1,27 @@
+import React from 'react';
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Menu from "./pages/HomePage/HomePage.js";
-import NavigationMenu from "./pages/Navigation/Navigation.js";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Menu from "./pages/home-page/HomePage.js";
+import NavigationMenu from "./pages/navigation-page/NavigationPage.js";
+import ChatListApp from "./pages/chat-room-list/App.js"
 
-export const App = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Menu />}>
-        </Route>
-      </Routes>
-      <NavigationMenu />
-    </BrowserRouter>
-  );
-}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: Menu,
+  },
+  {
+    path: "/chat-list-app",
+    Component: ChatListApp,
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
