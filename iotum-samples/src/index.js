@@ -5,8 +5,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Menu from "./pages/home-page/HomePage.js";
-import NavigationMenu from "./pages/navigation-page/NavigationPage.js";
 import ChatListApp from "./pages/chat-room-list/App.js"
+import './pages/navigation-page/NavigationPage.css';
 
 const router = createBrowserRouter([
   {
