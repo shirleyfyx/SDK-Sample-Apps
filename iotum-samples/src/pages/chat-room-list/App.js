@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import CredentialsForm from '../../components/credentials-form';
+import CredentialsForm from '../../components/CredentialsForm';
+import HomeButton from '../../components/HomeButton';
 import ChatRoomList from './ChatRoomList';
 import styles from './submitForm.module.css';
 import * as Callbridge from '@iotum/callbridge-js';
@@ -136,16 +137,19 @@ export const App = () => {
   }
 
   return (
-    <CredentialsForm
-      title="Chat Room List App"
-      domain={domain}
-      token={token}
-      hostId={hostId}
-      onDomainChange={(event) => setDomain(event.target.value)}
-      onTokenChange={(event) => setToken(event.target.value)}
-      onHostIdChange={(event) => setHostId(event.target.value)}
-      onSubmit={handleSubmit}
-    />
+    <div>
+      <HomeButton />
+      <CredentialsForm
+        title="Chat Room List App"
+        domain={domain}
+        token={token}
+        hostId={hostId}
+        onDomainChange={(event) => setDomain(event.target.value)}
+        onTokenChange={(event) => setToken(event.target.value)}
+        onHostIdChange={(event) => setHostId(event.target.value)}
+        onSubmit={handleSubmit}
+      />
+    </div>
   );
 };
 

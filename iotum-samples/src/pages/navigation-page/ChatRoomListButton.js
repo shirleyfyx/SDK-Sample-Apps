@@ -5,7 +5,7 @@ function ChatListButton() {
   const navigate = useNavigate();
   
   const handleClick = () => {
-    console.log('Chat Room List Button clicked.');
+    console.log('Chat Room List Button Clicked.');
     navigate('/chat-list-app');
   };
 

@@ -1,0 +1,12 @@
+.homeButton {
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    border: none; 
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.homeButton:hover {
+    background-color: #2980b9;
+  }
