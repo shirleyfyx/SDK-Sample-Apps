@@ -1,7 +1,8 @@
-import * as Callbridge from '@iotum/callbridge-js';
 import React, { useState, useEffect, useRef } from 'react';
+import CredentialsForm from '../../components/credentials-form';
 import ChatRoomList from './ChatRoomList';
 import styles from './submitForm.module.css';
+import * as Callbridge from '@iotum/callbridge-js';
 
 export const App = () => {
   const [token, setToken] = useState('');
@@ -53,6 +54,7 @@ export const App = () => {
   };
 
   const renderWidget = () => {
+    console.log("renderWidget ran");
     widget.current = new Callbridge.Dashboard(
       {
         domain: domain, // using the state variable for domain
@@ -65,6 +67,7 @@ export const App = () => {
       'Team',
       { layout: 'list', pathname: '/'}
     );
+    console.log("dashboard rendered");
 
     widget.current.once('dashboard.ROOM_LIST', (data) => {
       const uniqueAccountNames = []; // To keep track of account names that should have "(you)" added
@@ -114,6 +117,8 @@ export const App = () => {
       renderWidget();
     }
   }, [submitted]);
+
+  console.log("pass 1");
   
   if (submitted) {
     return (
@@ -130,29 +135,18 @@ export const App = () => {
     );
   }
 
-    return (
-      <div className="form-wrapper">
-      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 'bold'}}>Chat Room List App</div>
-      <form onSubmit={handleSubmit}>
-      <label>
-      Domain:
-      <input type="text" value={domain} onChange={handleDomainChange} required/>
-      </label>
-      <br />
-      <label>
-      SSO Token:
-      <input type="text" value={token} onChange={handleTokenChange} required/>
-      </label>
-      <br />
-      <label>
-      Host ID:
-      <input type="text" value={hostId} onChange={handleHostIdChange} required/>
-      </label>
-      <br />
-      <button type="submit">Submit</button>
-      </form>
-      </div>
-    );
-  }
+  return (
+    <CredentialsForm
+      title="Chat Room List App"
+      domain={domain}
+      token={token}
+      hostId={hostId}
+      onDomainChange={(event) => setDomain(event.target.value)}
+      onTokenChange={(event) => setToken(event.target.value)}
+      onHostIdChange={(event) => setHostId(event.target.value)}
+      onSubmit={handleSubmit}
+    />
+  );
+};
 
 export default App;
