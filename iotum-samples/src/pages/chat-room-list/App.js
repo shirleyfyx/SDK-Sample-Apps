@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import CredentialsForm from '../../components/CredentialsForm';
 import HomeButton from '../../components/HomeButton';
 import ChatRoomList from './ChatRoomList';
@@ -39,7 +39,7 @@ export const App = () => {
     });
   };
 
-  const renderWidget = (credentials) => {
+  const renderWidget = useCallback((credentials) => {
     console.log("renderWidget ran");
     widget.current = new Callbridge.Dashboard(
       {
@@ -96,13 +96,13 @@ export const App = () => {
     widget.current.on('dashboard.READY', () => {
       console.log("The list widget was rendered");
     });
-  }
+  }, []);
 
   useEffect(() => {
     if (submitted && credentials) {
       renderWidget(credentials);
     }
-  }, [submitted, credentials]);
+  }, [submitted, credentials, renderWidget]);
   
   if (submitted) {
     return (
