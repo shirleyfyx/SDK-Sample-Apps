@@ -6,29 +6,14 @@ import styles from './submitForm.module.css';
 import * as Callbridge from '@iotum/callbridge-js';
 
 export const App = () => {
-  const [token, setToken] = useState('');
-  const [hostId, setHostId] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [allRooms, setAllRooms] = useState([]);
-  const [domain, setDomain] = useState('iotum.callbridge.rocks'); //default domain
-
+  const [credentials, setCredentials] = useState(null); // State to store credentials
   const widget = useRef(null);
 
-  const handleTokenChange = (event) => {
-    setToken(event.target.value);
-  };
-  
-  
-  const handleHostIdChange = (event) => {
-    setHostId(event.target.value);
-  };
-
-  const handleDomainChange = (event) => {
-    setDomain(event.target.value);
-  };
-
-  const handleSubmit = () => {
+  const handleSubmit = (credentials) => {
     setSubmitted(true);
+    setCredentials(credentials); // Store the credentials in the state
   };
 
   const handleRoomButtonClick = (path) => {
@@ -54,14 +39,14 @@ export const App = () => {
     });
   };
 
-  const renderWidget = () => {
+  const renderWidget = (credentials) => {
     console.log("renderWidget ran");
     widget.current = new Callbridge.Dashboard(
       {
-        domain: domain, // using the state variable for domain
+        domain: credentials.domain, // using the state variable for domain
         sso: {
-          token: token,
-          hostId: hostId
+          token: credentials.token,
+          hostId: credentials.hostId
         },
         container: '#chat',
       },
@@ -114,23 +99,17 @@ export const App = () => {
   }
 
   useEffect(() => {
-    if (submitted) {
-      renderWidget();
+    if (submitted && credentials) {
+      renderWidget(credentials);
     }
-  }, [submitted]);
-
-  console.log("pass 1");
+  }, [submitted, credentials]);
   
   if (submitted) {
     return (
       <div className={styles.container}>
         <div id="chat" className={styles.roomListContainer}></div>
-
         <div>
-          <ChatRoomList
-            rooms={allRooms}
-            onRoomClose={handleRoomClose}
-          />
+          <ChatRoomList rooms={allRooms} onRoomClose={handleRoomClose} />
         </div>
       </div>
     );
@@ -139,16 +118,7 @@ export const App = () => {
   return (
     <div>
       <HomeButton />
-      <CredentialsForm
-        title="Chat Room List App"
-        domain={domain}
-        token={token}
-        hostId={hostId}
-        onDomainChange={(event) => setDomain(event.target.value)}
-        onTokenChange={(event) => setToken(event.target.value)}
-        onHostIdChange={(event) => setHostId(event.target.value)}
-        onSubmit={handleSubmit}
-      />
+      <CredentialsForm title="Chat Room List App" onSubmit={handleSubmit} />
     </div>
   );
 };

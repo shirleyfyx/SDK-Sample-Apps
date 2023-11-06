@@ -1,5 +1,5 @@
 .homeButton {
-    background-color: #3498db;
+    background-color: #007bff;
     color: white;
     cursor: pointer;
     border: none; 
@@ -8,5 +8,5 @@
 }
 
 .homeButton:hover {
-    background-color: #2980b9;
+    background-color: #0056b3;
   }
