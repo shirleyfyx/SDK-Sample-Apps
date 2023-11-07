@@ -102,6 +102,10 @@ export const App = () => {
     if (submitted && credentials) {
       renderWidget(credentials);
     }
+
+    return () => {
+      widget.current?.unload();
+    }
   }, [submitted, credentials, renderWidget]);
   
   if (submitted) {
