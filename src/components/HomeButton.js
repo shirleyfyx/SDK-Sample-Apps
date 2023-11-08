@@ -8,7 +8,7 @@ function HomeButton({ position = 'left' }) { // 'left' is default if no position
   
   const handleClick = () => {
     console.log('Home Button Clicked, Go To the Home Page.');
-    navigate('/');
+    navigate('/menu');
   };
 
   // Determine the button position class

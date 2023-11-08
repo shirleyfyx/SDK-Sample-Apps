@@ -1,0 +1,26 @@
+.tokenButton {
+    /* shared styles */
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 4px;
+    position: absolute; /* absolute positioning */
+    top: 20px;
+    z-index: 10; /* Ensure it's above other elements */
+  }
+  
+  .tokenButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .left {
+    left: 20px;
+  }
+  
+  .right {
+    right: 20px;
+  }
+  
