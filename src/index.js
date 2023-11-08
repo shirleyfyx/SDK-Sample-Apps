@@ -4,13 +4,19 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Login from "./pages/login-page/LoginPage.js"
 import Menu from "./pages/home-page/HomePage.js";
 import ChatListApp from "./pages/chat-room-list/App.js"
-import './pages/navigation-page/NavigationPage.css';
+import './navigation/NavigationPage.css';
+import './navigation/ChatRoomListButton.js'
 
 const router = createBrowserRouter([
   {
     path: "/",
+    Component: Login,
+  },
+  {
+    path: "/menu",
     Component: Menu,
   },
   {

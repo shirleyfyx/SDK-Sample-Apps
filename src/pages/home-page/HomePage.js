@@ -1,6 +1,6 @@
 import React from 'react';
 import './HomePage.css';
-import ChatListButton from '../navigation-page/ChatRoomListButton.js'
+import ChatListButton from '../../navigation/ChatRoomListButton.js'
 
 const Menu = () => {
   return (
