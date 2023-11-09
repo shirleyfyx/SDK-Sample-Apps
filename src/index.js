@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './components/ReduxStore.js';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/token-page/TokenPage.js"
 import Menu from "./pages/menu-page/MenuPage.js";
 import ChatListApp from "./pages/chat-room-list/App.js"
@@ -28,6 +27,8 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
