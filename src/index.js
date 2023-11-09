@@ -4,8 +4,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Login from "./pages/login-page/LoginPage.js"
-import Menu from "./pages/home-page/HomePage.js";
+import Login from "./pages/token-page/TokenPage.js"
+import Menu from "./pages/menu-page/MenuPage.js";
 import ChatListApp from "./pages/chat-room-list/App.js"
 import './navigation/NavigationPage.css';
 import './navigation/ChatRoomListButton.js'

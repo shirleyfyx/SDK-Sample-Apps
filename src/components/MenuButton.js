@@ -1,13 +1,13 @@
 // HomeButton.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './HomeButton.module.css'; // Import the CSS module
+import styles from './MenuButton.module.css'; // Import the CSS module
 
-function HomeButton({ position = 'left' }) { // 'left' is default if no position is provided
+function MenuButton({ position = 'left' }) { // 'left' is default if no position is provided
   const navigate = useNavigate();
   
   const handleClick = () => {
-    console.log('Home Button Clicked, Go To the Home Page.');
+    console.log('Menu Button Clicked, Go To the Menu Page.');
     navigate('/menu');
   };
 
@@ -16,11 +16,11 @@ function HomeButton({ position = 'left' }) { // 'left' is default if no position
 
   return (
     <div>
-      <button className={`${styles.homeButton} ${positionClass}`} onClick={handleClick}>
-        Home Page
+      <button className={`${styles.menuButton} ${positionClass}`} onClick={handleClick}>
+        Menu Page
       </button>
     </div>
   );
 }
 
-export default HomeButton;
+export default MenuButton;

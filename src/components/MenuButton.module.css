@@ -1,4 +1,4 @@
-.homeButton {
+.menuButton {
     /* shared styles */
     background-color: #007bff;
     color: white;
@@ -12,7 +12,7 @@
     z-index: 10; /* Ensure it's above other elements */
   }
   
-  .homeButton:hover {
+  .menuButton:hover {
     background-color: #0056b3;
   }
   
