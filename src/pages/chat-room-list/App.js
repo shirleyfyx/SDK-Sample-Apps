@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import CredentialsForm from '../../components/CredentialsForm';
-import HomeButton from '../../components/MenuButton';
 import ChatRoomList from './ChatRoomList';
 import styles from './submitForm.module.css';
 import * as Callbridge from '@iotum/callbridge-js';
@@ -121,7 +120,6 @@ export const App = () => {
 
   return (
     <div>
-      <HomeButton />
       <CredentialsForm title="Chat Room List App" onSubmit={handleSubmit} />
     </div>
   );

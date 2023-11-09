@@ -1,7 +1,6 @@
-// HomeButton.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './MenuButton.module.css'; // Import the CSS module
+import styles from './MenuButton.module.css'; 
 
 function MenuButton({ position = 'left' }) { // 'left' is default if no position is provided
   const navigate = useNavigate();
