@@ -7,8 +7,8 @@ import {
 import Login from "./pages/token-page/TokenPage.js"
 import Menu from "./pages/menu-page/MenuPage.js";
 import ChatListApp from "./pages/chat-room-list/App.js"
-import './navigation/Navigation.css';
-import './navigation/ChatRoomListButton.js'
+import './navigation/MenuPageButtons/MenuPageButtons.css';
+import './navigation/MenuPageButtons/ChatRoomListButton.js'
 
 const router = createBrowserRouter([
   {

@@ -1,8 +1,8 @@
 import React from 'react';
 import './MenuPage.css';
-import ChatListButton from '../../navigation/ChatRoomListButton.js'
-import TokenButton from '../../components/TokenButton.js';
-import MenuButton from '../../components/MenuButton.js';
+import ChatListButton from '../../navigation/MenuPageButtons/ChatRoomListButton.js'
+import TokenButton from '../../navigation/TokenButton/TokenButton.js';
+import MenuButton from '../../navigation/MenuButton/MenuButton.js';
 
 const Menu = () => {
   return (

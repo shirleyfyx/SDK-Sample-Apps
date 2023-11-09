@@ -1,8 +1,8 @@
 import React from 'react';
 import ChatRoom from './ChatRoom';
 import styles from './chat.module.css';
-import TokenButton from '../../components/TokenButton';
-import MenuButton from '../../components/MenuButton';
+import TokenButton from '../../navigation/TokenButton/TokenButton';
+import MenuButton from '../../navigation/MenuButton/MenuButton';
 
 const ChatRoomList = ({ rooms, onRoomClose }) => {
   return (
