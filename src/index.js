@@ -12,15 +12,15 @@ import './navigation/MenuPageButtons/ChatRoomListButton.js'
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: Login,
+    element: <Login />, 
   },
   {
     path: "/menu",
-    Component: Menu,
+    element: <Menu />,
   },
   {
     path: "/chat-list-app",
-    Component: ChatListApp,
+    element: <ChatListApp />, 
   },
 ]);
 

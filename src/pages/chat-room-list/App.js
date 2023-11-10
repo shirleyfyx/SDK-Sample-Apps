@@ -1,44 +1,31 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import CredentialsForm from '../../components/CredentialsForm';
+import { useSelector } from 'react-redux';
 import ChatRoomList from './ChatRoomList';
 import styles from './submitForm.module.css';
 import * as Callbridge from '@iotum/callbridge-js';
 
 export const App = () => {
-  const [submitted, setSubmitted] = useState(false);
   const [allRooms, setAllRooms] = useState([]);
-  const [credentials, setCredentials] = useState(null); // State to store credentials
   const widget = useRef(null);
-
-  const handleSubmit = (credentials) => {
-    setSubmitted(true);
-    setCredentials(credentials); // Store the credentials in the state
-  };
+  
+  // Retrive credentials from Redux store
+  const credentials = useSelector(state => state.credentials);
+  console.log("Credentials:", credentials);
 
   const handleRoomButtonClick = (path) => {
-    setAllRooms((prevRooms) => {
-      return prevRooms.map((room) => {
-        if (room.path === path) {
-          return { ...room, bool: true}; // Toggle the boolean value
-        }
-        return room;
-      });
-    });
+    setAllRooms(prevRooms => prevRooms.map(room => {
+      return room.path === path ? { ...room, bool: true } : room;
+    }));
   };
 
   const handleRoomClose = (path) => {
     console.log(path + " was closed");
-    setAllRooms((prevRooms) => {
-      return prevRooms.map((room) => {
-        if (room.path === path) {
-          return { ...room, bool: false };
-        }
-        return room;
-      });
-    });
+    setAllRooms(prevRooms => prevRooms.map(room => {
+      return room.path === path ? { ...room, bool: false } : room;
+    }));
   };
 
-  const renderWidget = useCallback((credentials) => {
+  const renderWidget = useCallback(() => {
     console.log("renderWidget ran");
     widget.current = new Callbridge.Dashboard(
       {
@@ -95,34 +82,27 @@ export const App = () => {
     widget.current.on('dashboard.READY', () => {
       console.log("The list widget was rendered");
     });
-  }, []);
+  }, [credentials]);
 
   useEffect(() => {
-    if (submitted && credentials) {
+    if (credentials && credentials.token && credentials.url && credentials.hostId) {
       renderWidget(credentials);
     }
 
     return () => {
       widget.current?.unload();
     }
-  }, [submitted, credentials, renderWidget]);
-  
-  if (submitted) {
-    return (
-      <div className={styles.container}>
-        <div id="chat" className={styles.roomListContainer}></div>
-        <div>
-          <ChatRoomList rooms={allRooms} onRoomClose={handleRoomClose} />
-        </div>
-      </div>
-    );
-  }
-
+  }, [credentials, renderWidget]);
+ 
   return (
-    <div>
-      <CredentialsForm title="Chat Room List App" onSubmit={handleSubmit} />
+    <div className={styles.container}>
+      <div id="chat" className={styles.roomListContainer}></div>
+      <div>
+        <ChatRoomList rooms={allRooms} onRoomClose={handleRoomClose} />
+      </div>
     </div>
   );
+  
 };
 
 export default App;
