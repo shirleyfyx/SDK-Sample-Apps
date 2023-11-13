@@ -21,7 +21,7 @@ export const TokenPage = () => {
       // Store the credentials in the Redux state
       dispatch(setCredentials({
           token: credentials.token,
-          url: credentials.url,
+          domain: credentials.domain,
           hostId: credentials.hostId
       }));
       

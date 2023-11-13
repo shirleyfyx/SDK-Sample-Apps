@@ -10,7 +10,7 @@ export const setCredentials = (credentials) => ({
 const initialState = {
   credentials: {
     token: null,
-    url: null,
+    domain: null,
     hostId: null
   },
 };

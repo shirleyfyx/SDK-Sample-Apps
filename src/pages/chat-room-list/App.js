@@ -85,7 +85,7 @@ export const App = () => {
   }, [credentials]);
 
   useEffect(() => {
-    if (credentials && credentials.token && credentials.url && credentials.hostId) {
+    if (credentials && credentials.token && credentials.domain && credentials.hostId) {
       renderWidget(credentials);
     }
 
