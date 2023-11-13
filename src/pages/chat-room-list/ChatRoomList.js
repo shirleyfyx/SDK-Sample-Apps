@@ -1,7 +1,8 @@
 import React from 'react';
 import ChatRoom from './ChatRoom';
 import styles from './chat.module.css';
-import HomeButton from '../../components/HomeButton';
+import TokenButton from '../../navigation/TokenButton/TokenButton';
+import MenuButton from '../../navigation/MenuButton/MenuButton';
 
 const ChatRoomList = ({ rooms, onRoomClose }) => {
   return (
@@ -19,7 +20,8 @@ const ChatRoomList = ({ rooms, onRoomClose }) => {
             </div>
           )
         )}
-        <HomeButton position="right"/>
+        <TokenButton position='right'/>
+        <MenuButton position="right"/>
       </div>
   );
 };

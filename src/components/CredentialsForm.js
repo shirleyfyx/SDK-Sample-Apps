@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CredentialsForm = ({ title, onSubmit }) => {
+const CredentialsForm = ({ onSubmit }) => {
   const [domain, setDomain] = useState('iotum.callbridge.rocks');
   const [token, setToken] = useState('');
   const [hostId, setHostId] = useState('');
@@ -14,7 +14,7 @@ const CredentialsForm = ({ title, onSubmit }) => {
 
   return (
     <div className="form-wrapper">
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 'bold' }}>{title}</div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 'bold' }}>Iotum Sample Apps</div>
       <form onSubmit={handleSubmit}>
         <label>
           Domain:
