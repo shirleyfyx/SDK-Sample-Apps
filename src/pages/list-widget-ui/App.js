@@ -1,62 +1,35 @@
-import * as Callbridge from '@iotum/callbridge-js';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import ChatRoomList from './ChatRoomList';
-import styles from './submitForm.module.css';
+import * as Callbridge from '@iotum/callbridge-js';
 
 const App = () => {
-  const [token, setToken] = useState('');
-  const [hostId, setHostId] = useState('');
-  const [submitted, setSubmitted] = useState(false);
   const [allRooms, setAllRooms] = useState([]);
-  const [domain, setDomain] = useState('iotum.callbridge.rocks'); //default domain
-
   const widget = useRef(null);
 
-  const handleTokenChange = (event) => {
-    setToken(event.target.value);
-  };
-  
-  const handleHostIdChange = (event) => {
-    setHostId(event.target.value);
-  };
-
-  const handleDomainChange = (event) => {
-    setDomain(event.target.value);
-  };
-
-  const handleSubmit = () => {
-    setSubmitted(true);
-  };
+  // Retrieve credentials from Redux store
+  const credentials = useSelector(state => state.credentials);
 
   const handleRoomButtonClick = (path) => {
-    setAllRooms((prevRooms) => {
-      return prevRooms.map((room) => {
-        if (room.path === path) {
-          return { ...room, bool: true}; // Toggle the boolean value
-        }
-        return room;
-      });
-    });
+    setAllRooms(prevRooms => prevRooms.map(room => {
+      return room.path === path ? { ...room, bool: true } : room;
+    }));
   };
 
   const handleRoomClose = (path) => {
-    setAllRooms((prevRooms) => {
-      return prevRooms.map((room) => {
-        if (room.path === path) {
-          return { ...room, bool: false };
-        }
-        return room;
-      });
-    });
+    setAllRooms(prevRooms => prevRooms.map(room => {
+      return room.path === path ? { ...room, bool: false } : room;
+    }));
   };
 
-  const renderWidget = () => {
+  // Define the renderWidget function with useCallback
+  const renderWidget = useCallback(() => {
     widget.current = new Callbridge.Dashboard(
       {
-        domain: domain, // using the state variable for domain
+        domain: credentials.domain,
         sso: {
-          token: token,
-          hostId: hostId
+          token: credentials.token,
+          hostId: credentials.hostId
         },
         container: '#chat',
       },
@@ -65,22 +38,20 @@ const App = () => {
     );
 
     widget.current.once('dashboard.ROOM_LIST', (data) => {
-      const uniqueAccountNames = []; // To keep track of account names that should have "(you)" added
+      const uniqueAccountNames = [];
       const allRoomsChange = Object.values(data.rooms).map((room) => {
         const accounts = room.accounts.map((account) => account.name);
-    
-        // Check if the room has only one account
+        
         if (accounts.length === 1) {
           const accountName = `${accounts[0]} (you)`;
-          uniqueAccountNames.push(accounts[0]); // Add the account name to the unique list
+          uniqueAccountNames.push(accounts[0]);
           return {
             name: accountName,
             path: room.path,
             bool: false,
           };
         }
-    
-        // Filter out account names that are in the unique list
+
         const filteredNames = accounts.filter((name) => !uniqueAccountNames.includes(name));
         return {
           name: filteredNames.join(', '),
@@ -88,57 +59,38 @@ const App = () => {
           bool: false,
         };
       });
-    
+
       setAllRooms(allRoomsChange);
     });
-    
+
     widget.current.toggle(false);
-  }
+  }, [credentials]); 
 
   useEffect(() => {
-    if (submitted) {
-      renderWidget();
-    }
-  }, [submitted]);
+    if (credentials && credentials.token && credentials.domain && credentials.hostId) {
+      const timer = setTimeout(() => {
+        renderWidget();
+      }, 100); // Delay the widget initialization to ensure the DOM element is available
   
-  if (submitted) {
-    return (
-      <div>
-        <div id="room-buttons">
-          <ChatRoomList
-            rooms={allRooms}
-            onRoomButtonClick={handleRoomButtonClick}
-            onRoomClose={handleRoomClose}
-          />
-        </div>
-        <div id="chat"></div>
-      </div>
-    );
-  }
+      return () => {
+        clearTimeout(timer);
+        widget.current?.unload();
+      };
+    }
+  }, [credentials, renderWidget]); // useEffect dependencies
 
-    return (
-      <div className="form-wrapper">
-      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 'bold'}}>List Widget UI App</div>
-      <form onSubmit={handleSubmit}>
-      <label>
-      Domain:
-      <input type="text" value={domain} onChange={handleDomainChange} required/>
-      </label>
-      <br />
-      <label>
-      SSO Token:
-      <input type="text" value={token} onChange={handleTokenChange} required/>
-      </label>
-      <br />
-      <label>
-      Host ID:
-      <input type="text" value={hostId} onChange={handleHostIdChange} required/>
-      </label>
-      <br />
-      <button type="submit">Submit</button>
-      </form>
+  return (
+    <div>
+      <div id="room-buttons">
+        <ChatRoomList
+          rooms={allRooms}
+          onRoomButtonClick={handleRoomButtonClick}
+          onRoomClose={handleRoomClose}
+        />
       </div>
-    );
-  }
+      <div id="chat"></div>
+    </div>
+  );
+};
 
 export default App;
