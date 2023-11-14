@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function ChatListButton() {
+function ChatRoomListButton() {
   const navigate = useNavigate();
   
   const handleClick = () => {
     console.log('Chat Room List Button Clicked.');
-    navigate('/chat-list-app');
+    navigate('/chat-room-list');
   };
 
   return (
@@ -16,4 +16,4 @@ function ChatListButton() {
   );
 }
 
-export default ChatListButton;
+export default ChatRoomListButton;
