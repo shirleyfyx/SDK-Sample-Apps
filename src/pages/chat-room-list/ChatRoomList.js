@@ -1,6 +1,6 @@
 import React from 'react';
-import ChatRoom from './ChatRoom';
-import styles from './chat.module.css';
+import ChatRoom from '../../components/ChatRoom/ChatRoom.js';
+import styles from '../../components/ChatRoom/chat.module.css';
 import TokenButton from '../../navigation/TokenButton/TokenButton';
 import MenuButton from '../../navigation/MenuButton/MenuButton';
 
