@@ -1,6 +1,8 @@
 import * as Callbridge from '@iotum/callbridge-js';
 import React, { useState, useRef } from 'react';
 import styles from './submitForm.module.css';
+import TokenButton from '../../navigation/TokenButton/TokenButton';
+import MenuButton from '../../navigation/MenuButton/MenuButton';
 
 function App() {
   const [token, setToken] = useState('');
@@ -67,8 +69,11 @@ function App() {
           />
           <button className={styles.startMeetingButton} onClick={() => renderWidget()}>Start Meeting</button>
         </div>
+        <TokenButton position='right'/>
+        <MenuButton position="right"/>
         <div ref={container} className={styles.widgetContainer}></div>  
       </div>
+
     );
   }
 
