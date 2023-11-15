@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../components/ReduxStore';
 import CredentialsForm from "../../components/CredentialsForm";
 import { useNavigate } from 'react-router-dom';
+import './TokenPage.css'
 
 export const TokenPage = () => {
   const [credentialsSubmitted, setCredentialsSubmitted] = useState(false);

@@ -1,5 +1,5 @@
 import * as Callbridge from '@iotum/callbridge-js';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './submitForm.module.css';
 
 function App() {
