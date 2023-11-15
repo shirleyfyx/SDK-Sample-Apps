@@ -6,10 +6,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/token-page/TokenPage.js"
 import Menu from "./pages/menu-page/MenuPage.js";
 import './navigation/MenuPageButtons/MenuPageButtons.css';
+import './navigation/MenuPageButtons/ChatRoomListButton.js'
 
 // Using React.lazy to dynamically import the components
 const ChatRoomListApp = React.lazy(() => import("./pages/chat-room-list/App.js"));
 const ListWidgetUiApp = React.lazy(() => import('./pages/list-widget-ui/App.js'));
+const SimpleMeetingApp = React.lazy(() => import("./pages/simple-meeting/App.js"));
 
 const router = createBrowserRouter([
   {
@@ -36,7 +38,15 @@ const router = createBrowserRouter([
         <ListWidgetUiApp />
       </Suspense>
     ),
-  }
+  },
+  {
+    path: "/simple-meeting",
+    element: (
+      <Suspense fallback={<div>Loading Simple Meeting...</div>}>
+        <SimpleMeetingApp />
+      </Suspense>
+    ),
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

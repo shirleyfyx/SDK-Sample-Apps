@@ -2,6 +2,7 @@ import React from 'react';
 import './MenuPage.css';
 import ChatRoomListButton from '../../navigation/MenuPageButtons/ChatRoomListButton.js';
 import ListWidgetUiButton from '../../navigation/MenuPageButtons/ListWidgetUiButton.js';
+import SimpleMeetingButton from '../../navigation/MenuPageButtons/SimpleMeetingButton.js';
 import TokenButton from '../../navigation/TokenButton/TokenButton.js';
 
 const Menu = () => {
@@ -10,6 +11,7 @@ const Menu = () => {
       <h1>Iotum Sample Apps</h1>
       <ChatRoomListButton />
       <ListWidgetUiButton />
+      <SimpleMeetingButton />
       <TokenButton position="left"/>
     </div>
   );
