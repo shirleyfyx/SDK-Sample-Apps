@@ -7,18 +7,45 @@ export const setCredentials = (credentials) => ({
   payload: credentials
 });
 
+// Function to load credentials from localStorage
+const loadCredentials = () => {
+  try {
+    const serializedCredentials = localStorage.getItem('credentials');
+    if (serializedCredentials === null) {
+      return {
+        token: null,
+        domain: null,
+        hostId: null
+      };
+    }
+    return JSON.parse(serializedCredentials);
+  } catch (err) {
+    return {
+      token: null,
+      domain: null,
+      hostId: null
+    };
+  }
+};
+
+// Initialize state from localStorage
 const initialState = {
-  credentials: {
-    token: null,
-    domain: null,
-    hostId: null
-  },
+  credentials: loadCredentials(),
 };
 
 const credentialsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CREDENTIALS:
-      return { ...state, credentials: action.payload };
+      const newCredentials = action.payload;
+      // Save updated credentials to localStorage
+      try {
+        const serializedCredentials = JSON.stringify(newCredentials);
+        localStorage.setItem('credentials', serializedCredentials);
+      } catch (err) {
+        // Handle errors, e.g., localStorage not available
+        console.error("Error saving data to localStorage", err);
+      }
+      return { ...state, credentials: newCredentials };
     default:
       return state;
   }
