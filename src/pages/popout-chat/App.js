@@ -1,6 +1,9 @@
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import styles from './submitForm.module.css';
+import TokenButton from '../../navigation/TokenButton/TokenButton';
+import MenuButton from '../../navigation/MenuButton/MenuButton';
 import * as Callbridge from '@iotum/callbridge-js';
-import React, {useState, useRef} from 'react';
-import styles from './submitForm.module.css'; 
+import { useSelector } from 'react-redux';
 
 function App() {
   const [token, setToken] = useState('');
@@ -85,12 +88,12 @@ function App() {
     }
 
     return (
-      <div className={styles.chatContainer}>
+        <><TokenButton position='right' /><MenuButton position="right" /><div className={styles.chatContainer}>
         <button className={styles.biggerButton} onClick={() => {
-          renderChatWidget()
-        }}>Chat</button>
+          renderChatWidget();
+        } }>Chat</button>
         <span className={styles.badge}>{unreadMessages}</span>
-      </div>
+      </div></>
     );
   }
 

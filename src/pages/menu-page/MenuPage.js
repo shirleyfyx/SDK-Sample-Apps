@@ -3,6 +3,7 @@ import './MenuPage.css';
 import ChatRoomListButton from '../../navigation/MenuPageButtons/ChatRoomListButton.js';
 import ListWidgetUiButton from '../../navigation/MenuPageButtons/ListWidgetUiButton.js';
 import SimpleMeetingButton from '../../navigation/MenuPageButtons/SimpleMeetingButton.js';
+import PopoutChatButton from '../../navigation/MenuPageButtons/PopoutChatButton.js';
 import TokenButton from '../../navigation/TokenButton/TokenButton.js';
 
 const Menu = () => {
@@ -12,6 +13,7 @@ const Menu = () => {
       <ChatRoomListButton />
       <ListWidgetUiButton />
       <SimpleMeetingButton />
+      <PopoutChatButton />
       <TokenButton position="left"/>
     </div>
   );

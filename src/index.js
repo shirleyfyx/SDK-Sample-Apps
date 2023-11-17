@@ -12,6 +12,7 @@ import './navigation/MenuPageButtons/ChatRoomListButton.js'
 const ChatRoomListApp = React.lazy(() => import("./pages/chat-room-list/App.js"));
 const ListWidgetUiApp = React.lazy(() => import('./pages/list-widget-ui/App.js'));
 const SimpleMeetingApp = React.lazy(() => import("./pages/simple-meeting/App.js"));
+const PopoutChatApp = React.lazy(() => import("./pages/popout-chat/App.js"));
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,14 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<div>Loading Simple Meeting...</div>}>
         <SimpleMeetingApp />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/popout-chat",
+    element: (
+      <Suspense fallback={<div>Loading Popout Chat...</div>}>
+        <PopoutChatApp />
       </Suspense>
     ),
   },
