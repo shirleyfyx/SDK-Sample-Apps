@@ -11,15 +11,11 @@ export const setCredentials = (credentials) => ({
 const loadCredentials = () => {
   try {
     const serializedCredentials = localStorage.getItem('credentials');
-    if (serializedCredentials === null) {
-      return {
-        token: null,
-        domain: null,
-        hostId: null
-      };
+    if (serializedCredentials) {
+      return JSON.parse(serializedCredentials);
     }
-    return JSON.parse(serializedCredentials);
   } catch (err) {
+    console.error("Error loading credentials from localStorage:", err);
     return {
       token: null,
       domain: null,
