@@ -1,11 +1,11 @@
-.nav-container {
+.menu-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.nav-button {
+.menu-button {
     width: 213px;
     text-align: center;
     font-size: 18px; 
