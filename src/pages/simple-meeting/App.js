@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import styles from './submitForm.module.css';
 import TokenButton from '../../navigation/TokenButton/TokenButton';
 import MenuButton from '../../navigation/MenuButton/MenuButton';
@@ -19,6 +19,11 @@ const App = () => {
   const renderWidget = useCallback(() => {
     console.log("render meeting widget");
 
+    if (!accessCode) {
+      console.log("Access code not set, widget will not be rendered.");
+      return;
+    }
+
     if (widget.current) {
       widget.current.unload();
     }
@@ -38,18 +43,6 @@ const App = () => {
       }
     );
   }, [credentials, accessCode]); // Dependencies: credentials and accessCode
-
-  useEffect(() => {
-    renderWidget();
-
-    // Cleanup function to unload the widget
-    return () => {
-      if (widget.current) {
-        widget.current.unload();
-        console.log("widget unloaded");
-      }
-    };
-  }, [renderWidget]); // Effect dependency: renderWidget
 
   return (
     <div className={styles.appContainer}>
