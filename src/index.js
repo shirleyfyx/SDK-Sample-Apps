@@ -25,35 +25,19 @@ const router = createBrowserRouter([
   // Wrap the component with Suspense and provide a fallback
   {
     path: "/chat-room-list",
-    element: (
-      <Suspense fallback={<div>Loading Chat Room List...</div>}>
-        <ChatRoomListApp />
-      </Suspense>
-    ),
+    element: <ChatRoomListApp />
   },
   {
     path: "/list-widget-ui",
-    element: (
-      <Suspense fallback={<div>Loading List Widget UI...</div>}>
-        <ListWidgetUiApp />
-      </Suspense>
-    ),
+    element: <ListWidgetUiApp />
   },
   {
     path: "/simple-meeting",
-    element: (
-      <Suspense fallback={<div>Loading Simple Meeting...</div>}>
-        <SimpleMeetingApp />
-      </Suspense>
-    ),
+    element: <SimpleMeetingApp />
   },
   {
     path: "/popout-chat",
-    element: (
-      <Suspense fallback={<div>Loading Popout Chat...</div>}>
-        <PopoutChatApp />
-      </Suspense>
-    ),
+    element: <PopoutChatApp />
   },
 ]);
 
@@ -61,7 +45,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <Suspense fallback={<div>Loading...</div>}></Suspense>
+        <RouterProvider router={router} />
+      <Suspense />
     </Provider>
   </React.StrictMode>
 );
