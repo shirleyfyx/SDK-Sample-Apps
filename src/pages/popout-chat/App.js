@@ -1,128 +1,96 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import styles from './submitForm.module.css';
 import TokenButton from '../../navigation/TokenButton/TokenButton';
 import MenuButton from '../../navigation/MenuButton/MenuButton';
 import * as Callbridge from '@iotum/callbridge-js';
 import { useSelector } from 'react-redux';
 
-function App() {
-  const [token, setToken] = useState('');
-  const [hostId, setHostId] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+const App = () => {
   const [unreadMessages, setUnreadMessages] = useState(0);
-  const [isLoading, setIsLoading] = useState(true); //Loading status of unread messages
-  const [domain, setDomain] = useState('iotum.callbridge.rocks'); //default domain
-
+  const [isLoading, setIsLoading] = useState(true);
   const widget = useRef(null);
 
-  const handleTokenChange = (event) => {
-    setToken(event.target.value);
-  };
-  const handleHostIdChange = (event) => {
-    setHostId(event.target.value);
-  };
+  const credentials = useSelector(state => state.credentials);
 
-  const handleDomainChange = (event) => {
-    setDomain(event.target.value);
-  };
-  
-  const handleSubmit = () => {
-  //on submit -> get the number of unread messages 
-    const container = document.createElement('div');
-    container.style.display = 'none';
-    const invisibleWidget = new Callbridge.Dashboard(
-      {
-        domain: 'iotum.callbridge.rocks',
+  // Function to render the chat widget
+  const renderChatWidget = useCallback(() => {
+    console.log('renderChatWidget called'); // Debugging log
+    if (!widget.current || !widget.current.instance) {
+      console.log("Create a new widget because the window was closed/there never was a widget");
+
+      widget.current = new Callbridge.Dashboard({
+        domain: credentials.domain,
         sso: {
-          token: token,
-          hostId: hostId,
+          token: credentials.token,
+          hostId: credentials.hostId,
         },
-        container: container,
+        container: window,
+        target: {
+          name: "CallbridgeChatWidget",
+          checkExisting: true,
+        }
+      }, 'Team');
+
+      widget.current.on('dashboard.NAVIGATE', (data) => {
+        console.log("navigate event");
+      });
+    } else if (widget.current.instance) {
+      console.log("Change focus to the existing widget that's open in a new window");
+      widget.current.instance.focus();
+    }
+  }, [credentials]);
+
+  // Effect for handling unread messages event
+  useEffect(() => {
+    console.log('Setting up invisibleWidget for unread messages'); // Debugging log
+
+    const hiddenContainer = document.createElement('div');
+      hiddenContainer.style.display = 'none';
+      document.body.appendChild(hiddenContainer);
+  
+    const invisibleWidget = new Callbridge.Dashboard({
+      domain: credentials.domain,
+      sso: {
+        token: credentials.token,
+        hostId: credentials.hostId,
       },
-      "Team",
-    );
+      container: hiddenContainer,
+      target: {
+        name: "InvisibleWidget",
+        checkExisting: true,
+      }
+    }, 'Team');
 
     invisibleWidget.on('dashboard.UNREAD_MESSAGES', (data) => {
-    const sum = Object.values(data.rooms).reduce((m, n) => m + n, 0);
-    setUnreadMessages(sum);
-    setIsLoading(false);
+      const sum = Object.values(data.rooms).reduce((m, n) => m + n, 0);
+      setUnreadMessages(sum);
+      setIsLoading(false);
     });
-    // Hide the form page
-    setSubmitted(true);
-  };
 
-  const renderChatWidget = () => {
-    if (!widget.current || !widget.current.instance) {
-      console.log("Create a new widget because the window was closed/there never was a widget")
-        widget.current = new Callbridge.Dashboard(
-          {
-            domain: domain, // using the state variable for domain
-            sso: {
-              token: token,
-              hostId: hostId,
-            },
-            container: window,
-            target: {
-              name: "CallbridgeChatWidget",
-              checkExisting: true,
-            }
-          },
-          'Team',
-        );
+    // Cleanup function
+    return () => {
+      invisibleWidget.unload();
+    };
+  }, [credentials]);
 
-        widget.current.on('dashboard.NAVIGATE', (data)=> {
-          console.log("navigate event");
-        })
-    }
-      else if(widget.current.instance) {
-        console.log("Change focus to the existing widget that's open in a new window")
-        widget.current.instance.focus();
-      }
-  }
-
-  if(submitted) {
-    if (isLoading) {
-      return (
-        <div>Loading unread messages...</div> 
-      )
-    }
-
-    return (
-        <><TokenButton position='right' /><MenuButton position="right" /><div className={styles.chatContainer}>
-        <button className={styles.biggerButton} onClick={() => {
-          renderChatWidget();
-        } }>Chat</button>
-        <span className={styles.badge}>{unreadMessages}</span>
-      </div></>
-    );
-  }
-
-  //submit SSO token and hostId page: 
-  if(!submitted) {
-    return (
-      <div className="form-wrapper">
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 'bold'}}>Popout Chat App</div>
-        <form onSubmit={handleSubmit}>
-        <label>
-          Domain:
-          <input type="text" value={domain} onChange={handleDomainChange} required/>
-        </label>
-        <br />
-        <label>
-          SSO Token:
-          <input type="text" value={token} onChange={handleTokenChange} required/>
-        </label>
-        <br />
-        <label>
-          Host ID:
-          <input type="text" value={hostId} onChange={handleHostIdChange} required/>
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-        </form>
+  return (
+    <>
+      <TokenButton position='right' />
+      <MenuButton position="right" />
+      <div className={styles.chatContainer}>
+        {isLoading ? (
+          <div>Loading unread messages...</div>
+        ) : (
+          <>
+            <button className={styles.biggerButton} onClick={renderChatWidget}>
+              Chat
+            </button>
+            <span className={styles.badge}>{unreadMessages}</span>
+          </>
+        )}
       </div>
-    );
-  }
+    </>
+  );
 };
 
 export default App;

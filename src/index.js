@@ -22,7 +22,6 @@ const router = createBrowserRouter([
     path: "/menu",
     element: <Menu />,
   },
-  // Wrap the component with Suspense and provide a fallback
   {
     path: "/chat-room-list",
     element: <ChatRoomListApp />
@@ -45,9 +44,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Suspense fallback={<div>Loading...</div>}></Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
         <RouterProvider router={router} />
-      <Suspense />
+      </Suspense>
     </Provider>
   </React.StrictMode>
 );
