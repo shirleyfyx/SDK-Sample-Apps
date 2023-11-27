@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './CredentialsForm.css'
 
 const CredentialsForm = ({ onSubmit }) => {
   const [domain, setDomain] = useState('iotum.callbridge.rocks');
@@ -14,7 +15,7 @@ const CredentialsForm = ({ onSubmit }) => {
 
   return (
     <div className="form-wrapper">
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 'bold' }}>Iotum Sample Apps</div>
+      <h1 className="title">Iotum Sample Apps</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Domain:
