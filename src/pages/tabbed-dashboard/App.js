@@ -1,5 +1,7 @@
 import * as Callbridge from '@iotum/callbridge-js';
 import React, { useState, useRef, useEffect } from 'react';
+import TokenButton from '../../navigation/TokenButton/TokenButton';
+import MenuButton from '../../navigation/MenuButton/MenuButton';
 import styles from './submitForm.module.css';
 
 function App() {
@@ -144,6 +146,8 @@ function App() {
         {!chatWidgetReady && <div>The widgets are loading</div>}
 
         <div ref={container} className={styles.widgetContainer}></div>
+        <TokenButton position='right' />
+        <MenuButton position="right" />
       </div>
     );
   }
