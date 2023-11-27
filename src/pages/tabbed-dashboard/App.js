@@ -1,178 +1,120 @@
-import * as Callbridge from '@iotum/callbridge-js';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import styles from './submitForm.module.css';
 import TokenButton from '../../navigation/TokenButton/TokenButton';
 import MenuButton from '../../navigation/MenuButton/MenuButton';
-import styles from './submitForm.module.css';
+import * as Callbridge from '@iotum/callbridge-js';
+import { useSelector } from 'react-redux';
 
-function App() {
-  const [token, setToken] = useState('');
-  const [hostId, setHostId] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const [yourApp, setYourApp] = useState(true);
-  const [unreadMessages, setUnreadMessages] = useState();
-  const [start, setStart] = useState();
-  const [chatWidgetReady, setChatWidgetReady] = useState(false); // New state
-  const [domain, setDomain] = useState('iotum.callbridge.rocks'); //default domain
+const App = () => {
+  const [isYourAppVisible, setIsYourAppVisible] = useState(true);
+  const [unreadMessages, setUnreadMessages] = useState(0);
+  const [isWidgetInitialized, setIsWidgetInitialized] = useState(false);
+  const [chatWidgetReady, setChatWidgetReady] = useState(false);
 
-  const container = useRef(null);
-  const chatWidget = useRef(null);
-  const widget = useRef(null);
+  const containerRef = useRef(null);
+  const chatWidgetRef = useRef(null);
+  const widgetRef = useRef(null);
 
-  const handleTokenChange = (event) => {
-    setToken(event.target.value);
+  const credentials = useSelector(state => state.credentials);
+
+  const unloadWidgets = () => {
+    if (widgetRef.current) {
+      widgetRef.current.toggle(false);
+    }
+    if (chatWidgetRef.current) {
+      chatWidgetRef.current.toggle(false);
+    }
   };
 
-  const handleHostIdChange = (event) => {
-    setHostId(event.target.value);
-  };
-
-  const handleDomainChange = (event) => {
-    setDomain(event.target.value);
-  };
-
-  const handleSubmit = () => {
-    setSubmitted(true);
-  };
-
-  const renderWidget = () => {
-  console.log("Two widgets were rendered: A chat room widget and a widget for the drive/contacts");
-  console.log("Both these widgets start as invisible");
-
-  widget.current = new Callbridge.Dashboard(
-    {
-      domain: domain, // using the state variable for domain
+  const renderWidget = useCallback(() => {
+    widgetRef.current = new Callbridge.Dashboard({
+      domain: credentials.domain,
       sso: {
-        token: token,
-        hostId: hostId,
-    },
-      container: container.current,
-    }, 
-  );
-    widget.current.toggle(false);
+        token: credentials.token,
+        hostId: credentials.hostId,
+      },
+      container: containerRef.current,
+    });
 
+    widgetRef.current.toggle(false);
 
-    widget.current.on('dashboard.READY', () => {
-      console.log("render chat widget");
-      chatWidget.current = new Callbridge.Dashboard(
-        {
-          domain: 'iotum.callbridge.rocks',
-          container: container.current,
-        },
-        "Team",
-      );
-        chatWidget.current.toggle(false);
-    
-      chatWidget.current.on('dashboard.UNREAD_MESSAGES', (data) => {
-        console.log("There was an unread messages event")
-        const sum = Object.values(data.rooms).reduce((m, n) => m + n, 0);
-        setUnreadMessages(sum);
+    widgetRef.current.on('dashboard.READY', () => {
+      chatWidgetRef.current = new Callbridge.Dashboard({
+        domain: 'iotum.callbridge.rocks',
+        container: containerRef.current,
+      }, "Team");
+
+      chatWidgetRef.current.toggle(false);
+
+      chatWidgetRef.current.on('dashboard.UNREAD_MESSAGES', (data) => {
+        const totalUnread = Object.values(data.rooms).reduce((total, count) => total + count, 0);
+        setUnreadMessages(totalUnread);
       });
 
-      chatWidget.current.on('dashboard.READY', () => {
-        console.log("Chat widget is ready");
-        setChatWidgetReady(true); // Set chatWidgetReady to true when chat widget is ready
-        setStart(true);
+      chatWidgetRef.current.on('dashboard.READY', () => {
+        setChatWidgetReady(true);
+        setIsWidgetInitialized(true);
       });
-    }); 
-}
+    });
+  }, [credentials]);
 
   useEffect(() => {
-    if (start === true) {
-      chatWidget.current.on('dashboard.NAVIGATE', (data) => {
-        if (data.pathname !== '/') {
-          loadWidget('Team');
-          console.log("The chat widget navigated to this room: " + data.pathname);
-        } else {
-          console.log("The chat widget navigated to an unspecified room");
-        }
+    if (isWidgetInitialized) {
+      chatWidgetRef.current.on('dashboard.NAVIGATE', (data) => {
+        const room = data.pathname !== '/' ? data.pathname : "an unspecified room";
+        console.log(`The chat widget navigated to this room: ${room}`);
       });
     }
-  }, [start]);
+  }, [isWidgetInitialized]);
 
   useEffect(() => {
-    if (submitted) {
-      renderWidget();
-    }
-  }, [submitted]);
+    renderWidget();
+  }, [credentials, renderWidget]);
 
   const loadWidget = (service) => {
+    unloadWidgets(); // Unload any currently displayed widgets
+
     if(service === "") {
-      widget.current.toggle(false);
-      chatWidget.current.toggle(false);
-      chatWidget.current.load("Team", {layout: "full", pathname: "/"})
-      chatWidget.current.toggle(false);
-      setYourApp(true);
-      console.log("Load your app")
+      setIsYourAppVisible(true);
+      console.log("Load your app");
+    } else if (service === "Team") {
+      chatWidgetRef.current.toggle(true);
+      setIsYourAppVisible(false);
+      console.log("Load the team chat widget");
+    } else {
+      widgetRef.current.toggle(true);
+      widgetRef.current.load(service);
+      setIsYourAppVisible(false);
+      console.log("Load the " + service +  " widget");
     }
-    else if (service === "Team") {
-      chatWidget.current.toggle(true);
-      widget.current.toggle(false);  
-      setYourApp(false); 
-      console.log("Load the team chat widget")
-    }  else {
-      widget.current.toggle(true); 
-      widget.current.load(service);
-      chatWidget.current.toggle(false);
-      chatWidget.current.load("Team", {layout: "full", pathname: "/"})
-      chatWidget.current.toggle(false);
-      console.log("Load the " + service +  " widget")
-      setYourApp(false); 
-    }
-  }
-
-  if (submitted) {
-    return (
-      <div className={styles.appContainer}>
-        <div className={styles.verticalTabContainer}>
-          <button onClick={() => loadWidget('')} disabled={!chatWidgetReady}>
-            Your App
-          </button>
-          <button
-            onClick={() => loadWidget('Team')}
-            disabled={!chatWidgetReady}
-            style={{ position: 'relative' }}
-          >
-            Team Chat
-            {unreadMessages > 0 && <span className={styles.badge}>{unreadMessages}</span>}
-          </button>
-          <button onClick={() => loadWidget('Drive')} disabled={!chatWidgetReady}>
-            Drive
-          </button>
-          <button onClick={() => loadWidget('Contacts')} disabled={!chatWidgetReady}>
-            Contacts
-          </button>
-        </div>
-        {yourApp && <div>Your app goes here</div>}
-        {!chatWidgetReady && <div>The widgets are loading</div>}
-
-        <div ref={container} className={styles.widgetContainer}></div>
-        <TokenButton position='right' />
-        <MenuButton position="right" />
-      </div>
-    );
   }
 
   return (
-    <div className="form-wrapper">
-      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 'bold'}}>Tabbed Dashboard App</div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Domain:
-          <input type="text" value={domain} onChange={handleDomainChange} required/>
-        </label>
-        <br />
-        <label>
-          SSO Token:
-          <input type="text" value={token} onChange={handleTokenChange} required/>
-        </label>
-        <br />
-        <label>
-          Host ID:
-          <input type="text" value={hostId} onChange={handleHostIdChange} required/>
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
+    <div className={styles.appContainer}>
+      <div className={styles.verticalTabContainer}>
+        <button onClick={() => loadWidget('')} disabled={!chatWidgetReady}>
+          Your App
+        </button>
+        <button
+          onClick={() => loadWidget('Team')}
+          disabled={!chatWidgetReady}
+          style={{ position: 'relative' }}
+        >
+          Team Chat
+          {unreadMessages > 0 && <span className={styles.badge}>{unreadMessages}</span>}
+        </button>
+        <button onClick={() => loadWidget('Drive')} disabled={!chatWidgetReady}>
+          Drive
+        </button>
+        <button onClick={() => loadWidget('Contacts')} disabled={!chatWidgetReady}>
+          Contacts
+        </button>
+      </div>
+      {isYourAppVisible && <div>Your app goes here</div>}
+      {!chatWidgetReady && <div>The widgets are loading</div>}
+      <div ref={containerRef} className={styles.widgetContainer}></div>
+      <TokenButton position='right' />
+      <MenuButton position="right" />
     </div>
   );
 }
