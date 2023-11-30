@@ -69,6 +69,13 @@ const App = () => {
 
   useEffect(() => {
     renderWidget();
+
+    return () => {
+      if (widgetRef.current) {
+        widgetRef.current.unload();
+        widgetRef.current = null;
+      }
+    };
   }, [credentials, renderWidget]);
 
   const loadWidget = (service) => {

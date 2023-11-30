@@ -69,6 +69,10 @@ const App = () => {
 
     // Cleanup function
     return () => {
+      if (widget.current) {
+        widget.current.unload();
+        widget.current = null;
+      };
       invisibleWidget.unload();
     };
   }, [credentials]);
