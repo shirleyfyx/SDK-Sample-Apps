@@ -16,7 +16,7 @@ const TabbedDashboardApp = React.lazy(() => import("./pages/tabbed-dashboard/App
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/iotum-samples",
     element: <Login />, 
   },
   {
