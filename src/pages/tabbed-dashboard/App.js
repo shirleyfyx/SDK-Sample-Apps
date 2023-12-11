@@ -71,11 +71,10 @@ const App = () => {
     renderWidget();
 
     return () => {
-      if (widgetRef.current) {
-        widgetRef.current.unload();
-        widgetRef.current = null;
-      }
-    };
+      unloadWidgets();
+      console.log('Widget unloaded')
+    }
+
   }, [credentials, renderWidget]);
 
   const loadWidget = (service) => {
