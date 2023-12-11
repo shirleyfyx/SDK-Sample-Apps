@@ -12,6 +12,7 @@ const ChatRoomListApp = React.lazy(() => import("./pages/chat-room-list/App.js")
 const ListWidgetUiApp = React.lazy(() => import('./pages/list-widget-ui/App.js'));
 const SimpleMeetingApp = React.lazy(() => import("./pages/simple-meeting/App.js"));
 const PopoutChatApp = React.lazy(() => import("./pages/popout-chat/App.js"));
+const TabbedDashboardApp = React.lazy(() => import("./pages/tabbed-dashboard/App.js"));
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "/popout-chat",
     element: <PopoutChatApp />
+  },
+  {
+    path: "/tabbed-dashboard",
+    element: <TabbedDashboardApp />
   },
 ]);
 

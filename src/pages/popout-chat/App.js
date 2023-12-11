@@ -11,6 +11,7 @@ const App = () => {
   const widget = useRef(null);
 
   const credentials = useSelector(state => state.credentials);
+  console.log("Credentials:", credentials);
 
   // Function to render the chat widget
   const renderChatWidget = useCallback(() => {
@@ -69,9 +70,12 @@ const App = () => {
 
     // Cleanup function
     return () => {
-      invisibleWidget.unload();
+
+      widget.current?.unload()
+      invisibleWidget?.unload()
+
     };
-  }, [credentials]);
+    }, [credentials]);
 
   return (
     <>

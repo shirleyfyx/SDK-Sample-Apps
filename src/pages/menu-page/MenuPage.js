@@ -7,10 +7,11 @@ const Menu = () => {
   return (
     <div className="menu-container">
       <h1>Iotum Sample Apps</h1>
-      <MenuPageButton text="Chat Room List App" path="/chat-room-list" />
-      <MenuPageButton text="List Widget UI App" path="/list-widget-ui" />
-      <MenuPageButton text="Simple Meeting App" path="/simple-meeting" />
-      <MenuPageButton text="Popout Chat App" path="/popout-chat" />
+      <MenuPageButton text="Tabbed Dashboard" path="/tabbed-dashboard" />
+      <MenuPageButton text="Chat Room List" path="/chat-room-list" />
+      <MenuPageButton text="Simple Meeting" path="/simple-meeting" />
+      <MenuPageButton text="List Widget UI" path="/list-widget-ui" />
+      <MenuPageButton text="Popout Chat" path="/popout-chat" />
       <TokenButton position="left"/>
     </div>
   );
