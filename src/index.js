@@ -12,7 +12,7 @@ import './navigation/MenuPageButtons/ChatRoomListButton.js'
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/iotum-samples",
     element: <Login />, 
   },
   {
