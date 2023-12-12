@@ -16,31 +16,31 @@ const TabbedDashboardApp = React.lazy(() => import("./pages/tabbed-dashboard/App
 
 const router = createBrowserRouter([
   {
-    path: "/iotum-samples",
+    path: "/",
     element: <Login />, 
   },
   {
-    path: "/iotum-samples/menu",
+    path: "/menu",
     element: <Menu />,
   },
   {
-    path: "/iotum-samples/chat-room-list",
+    path: "/chat-room-list",
     element: <ChatRoomListApp />
   },
   {
-    path: "/iotum-samples/list-widget-ui",
+    path: "/list-widget-ui",
     element: <ListWidgetUiApp />
   },
   {
-    path: "/iotum-samples/simple-meeting",
+    path: "/simple-meeting",
     element: <SimpleMeetingApp />
   },
   {
-    path: "/iotum-samples/popout-chat",
+    path: "/popout-chat",
     element: <PopoutChatApp />
   },
   {
-    path: "/iotum-samples/tabbed-dashboard",
+    path: "/tabbed-dashboard",
     element: <TabbedDashboardApp />
   },
 ]);
@@ -50,7 +50,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Suspense fallback={<div>Loading...</div>}>
-        <RouterProvider router={router} />
+        <RouterProvider router={router} basename="/iotum-samples"/>
       </Suspense>
     </Provider>
   </React.StrictMode>
