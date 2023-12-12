@@ -2,8 +2,11 @@ import React from 'react';
 import './MenuPage.css';
 import MenuPageButton from '../../navigation/MenuPageButtons/MenuPageButton.js';
 import TokenButton from '../../navigation/TokenButton/TokenButton.js';
+import useGuardedRoute from '../../components/hooks/useGuardedRoute.js';
 
 const Menu = () => {
+  useGuardedRoute();
+
   return (
     <div className="menu-container">
       <h1>Iotum Sample Apps</h1>
@@ -15,6 +18,6 @@ const Menu = () => {
       <TokenButton position="left"/>
     </div>
   );
-}
+};
 
 export default Menu;

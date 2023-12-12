@@ -4,78 +4,75 @@ import TokenButton from '../../navigation/TokenButton/TokenButton';
 import MenuButton from '../../navigation/MenuButton/MenuButton';
 import * as Callbridge from '@iotum/callbridge-js';
 import { useSelector } from 'react-redux';
+import useGuardedRoute from '../../components/hooks/useGuardedRoute';
 
 const App = () => {
+  useGuardedRoute(); // Guard the route
   const [unreadMessages, setUnreadMessages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const widget = useRef(null);
 
   const credentials = useSelector(state => state.credentials);
-  console.log("Credentials:", credentials);
 
-  // Function to render the chat widget
+  // Check if all necessary credentials are available
+  const areCredentialsValid = credentials.token && credentials.domain && credentials.hostId;
+
   const renderChatWidget = useCallback(() => {
-    console.log('renderChatWidget called'); // Debugging log
-    if (!widget.current || !widget.current.instance) {
-      console.log("Create a new widget because the window was closed/there never was a widget");
+    if (areCredentialsValid) {
+      if (!widget.current || !widget.current.instance) {
+        widget.current = new Callbridge.Dashboard({
+          domain: credentials.domain,
+          sso: {
+            token: credentials.token,
+            hostId: credentials.hostId,
+          },
+          container: window,
+          target: {
+            name: "CallbridgeChatWidget",
+            checkExisting: true,
+          }
+        }, 'Team');
 
-      widget.current = new Callbridge.Dashboard({
+        widget.current.on('dashboard.NAVIGATE', (data) => {
+          console.log("navigate event");
+        });
+      } else if (widget.current.instance) {
+        widget.current.instance.focus();
+      }
+    }
+  }, [credentials, areCredentialsValid]);
+
+  useEffect(() => {
+    if (areCredentialsValid) {
+      const hiddenContainer = document.createElement('div');
+      hiddenContainer.style.display = 'none';
+      document.body.appendChild(hiddenContainer);
+
+      const invisibleWidget = new Callbridge.Dashboard({
         domain: credentials.domain,
         sso: {
           token: credentials.token,
           hostId: credentials.hostId,
         },
-        container: window,
+        container: hiddenContainer,
         target: {
-          name: "CallbridgeChatWidget",
+          name: "InvisibleWidget",
           checkExisting: true,
         }
       }, 'Team');
 
-      widget.current.on('dashboard.NAVIGATE', (data) => {
-        console.log("navigate event");
+      invisibleWidget.on('dashboard.UNREAD_MESSAGES', (data) => {
+        const sum = Object.values(data.rooms).reduce((m, n) => m + n, 0);
+        setUnreadMessages(sum);
+        setIsLoading(false);
       });
-    } else if (widget.current.instance) {
-      console.log("Change focus to the existing widget that's open in a new window");
-      widget.current.instance.focus();
+
+      return () => {
+        widget.current?.unload();
+        invisibleWidget?.unload();
+      };
     }
-  }, [credentials]);
-
-  // Effect for handling unread messages event
-  useEffect(() => {
-    console.log('Setting up invisibleWidget for unread messages'); // Debugging log
-
-    const hiddenContainer = document.createElement('div');
-      hiddenContainer.style.display = 'none';
-      document.body.appendChild(hiddenContainer);
-  
-    const invisibleWidget = new Callbridge.Dashboard({
-      domain: credentials.domain,
-      sso: {
-        token: credentials.token,
-        hostId: credentials.hostId,
-      },
-      container: hiddenContainer,
-      target: {
-        name: "InvisibleWidget",
-        checkExisting: true,
-      }
-    }, 'Team');
-
-    invisibleWidget.on('dashboard.UNREAD_MESSAGES', (data) => {
-      const sum = Object.values(data.rooms).reduce((m, n) => m + n, 0);
-      setUnreadMessages(sum);
-      setIsLoading(false);
-    });
-
-    // Cleanup function
-    return () => {
-
-      widget.current?.unload()
-      invisibleWidget?.unload()
-
-    };
-    }, [credentials]);
+  }, [credentials, areCredentialsValid]);
 
   return (
     <>
