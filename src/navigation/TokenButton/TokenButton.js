@@ -7,7 +7,7 @@ function TokenButton({ position = 'left' }) { // 'left' is default if no positio
   
   const handleClick = () => {
     console.log('Token Button Clicked, Go To the Token Page.');
-    navigate('/iotum-samples');
+    navigate('/');
   };
 
   // Determine the button position class

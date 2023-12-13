@@ -7,7 +7,7 @@ function MenuButton({ position = 'left' }) { // 'left' is default if no position
   
   const handleClick = () => {
     console.log('Menu Button Clicked, Go To the Menu Page.');
-    navigate('/iotum-samples/menu');
+    navigate('/menu');
   };
 
   // Determine the button position class
