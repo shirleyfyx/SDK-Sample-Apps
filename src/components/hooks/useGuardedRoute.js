@@ -9,7 +9,7 @@ const useGuardedRoute = () => {
   useEffect(() => {
     // Redirect to TokenPage if credentials are invalid
     if (!credentials.token) {
-      navigate('/');
+      navigate('/iotum-samples');
       console.log('New credentials input needed')
     }
   }, [credentials.token, navigate]);
