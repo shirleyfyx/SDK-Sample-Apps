@@ -29,7 +29,7 @@ export const TokenPage = () => {
       // Indicate that the credentials have been submitted
       setCredentialsSubmitted(true);
 
-      navigate('/menu'); 
+      navigate('/iotum-samples/menu'); 
   };
 
   // Render the form or the result based on the credentials submission state

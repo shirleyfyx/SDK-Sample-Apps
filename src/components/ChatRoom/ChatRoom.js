@@ -1,20 +1,15 @@
 import React, { useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import * as Callbridge from '@iotum/callbridge-js';
 import styles from './chat.module.css';
 
 const ChatRoom = (props) => {
   const chatContainerRef = useRef(null); 
-  const credentials = useSelector(state => state.credentials)
 
   useEffect(() => {
-    // Use the domain from the Redux store, or a default value if not available
-    const domain = credentials.domain || 'iotum.callbridge.rocks'
-
     // This code will run after the component has rendered and the chat container is available in the DOM
     const chatRoom = new Callbridge.Dashboard(
       {
-        domain: domain,
+        domain: 'iotum.callbridge.rocks',
         container: chatContainerRef.current, // Use the DOM element reference
       },
       'Team',
@@ -28,7 +23,7 @@ const ChatRoom = (props) => {
       chatRoom.unload(); // Replace with actual cleanup method if available
       console.log("Chat room was closed: " + props.path);
     };
-  }, [props.path, credentials]); 
+  }, [props.path]); 
 
   // Render the chat container reference
   return <div ref={chatContainerRef} className={styles.chatRoom}></div>;

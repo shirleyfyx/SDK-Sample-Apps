@@ -4,10 +4,8 @@ import TokenButton from '../../navigation/TokenButton/TokenButton';
 import MenuButton from '../../navigation/MenuButton/MenuButton';
 import * as Callbridge from '@iotum/callbridge-js';
 import { useSelector } from 'react-redux';
-import useGuardedRoute from '../../components/hooks/useGuardedRoute';
 
 const App = () => {
-  useGuardedRoute()
   const [accessCode, setAccessCode] = useState('');
   const container = useRef(null);
   const widget = useRef(null);
