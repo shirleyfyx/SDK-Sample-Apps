@@ -3,10 +3,8 @@ import { useSelector } from 'react-redux';
 import ChatRoomList from './ChatRoomList';
 import styles from './submitForm.module.css';
 import * as Callbridge from '@iotum/callbridge-js';
-import useGuardedRoute from '../../components/hooks/useGuardedRoute';
 
 export const App = () => {
-  useGuardedRoute()
   const [allRooms, setAllRooms] = useState([]);
   const widget = useRef(null);
   
