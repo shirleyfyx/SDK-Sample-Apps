@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import useGuardedRoute from '../../components/hooks/useGuardedRoute';
 
 const App = () => {
-  useGuardedRoute()
+  useGuardedRoute();
   const [accessCode, setAccessCode] = useState('');
   const container = useRef(null);
   const widget = useRef(null);
@@ -16,7 +16,13 @@ const App = () => {
 
   const handleAccessCode = (event) => {
     setAccessCode(event.target.value);
-  }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      renderWidget();
+    }
+  };
 
   const renderWidget = useCallback(() => {
     console.log("render meeting widget");
@@ -55,6 +61,7 @@ const App = () => {
           className={styles.accessCodeInput}
           value={accessCode}
           onChange={handleAccessCode}
+          onKeyPress={handleKeyPress} // Added key press listener
         />
         <button className={styles.startMeetingButton} onClick={renderWidget}>Start Meeting</button>
       </div>
