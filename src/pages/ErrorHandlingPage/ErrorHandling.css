@@ -1,0 +1,11 @@
+.redirect-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(1, 1, 1);
+  }
+  
+  h1 {
+    margin-bottom: 20px; 
+    font-size: 36px;
+  }

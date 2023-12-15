@@ -1,3 +1,4 @@
+// Menu.js
 import React from 'react';
 import './MenuPage.css';
 import MenuPageButton from '../../navigation/MenuPageButtons/MenuPageButton.js';
@@ -5,7 +6,11 @@ import TokenButton from '../../navigation/TokenButton/TokenButton.js';
 import useGuardedRoute from '../../components/hooks/useGuardedRoute.js';
 
 const Menu = () => {
-  useGuardedRoute();
+  const isAuthenticated = useGuardedRoute();
+
+  if (!isAuthenticated) {
+    return null; 
+  }
 
   return (
     <div className="menu-container">
