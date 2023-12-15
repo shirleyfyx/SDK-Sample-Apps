@@ -1,7 +1,7 @@
-import './ErrorHandeling.css';
+import './ErrorHandling.css';
 import TokenButton from '../../navigation/TokenButton/TokenButton';
 
-const ErrorHandeling = () => {
+const ErrorHandling = () => {
 
   return (
     <div className="redirect-container">
@@ -12,4 +12,4 @@ const ErrorHandeling = () => {
   );
 };
 
-export default ErrorHandeling;
+export default ErrorHandling;
