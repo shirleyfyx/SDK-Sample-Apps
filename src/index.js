@@ -5,6 +5,7 @@ import store from './components/ReduxStore.js';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./pages/token-page/TokenPage.js"
 import Menu from "./pages/menu-page/MenuPage.js";
+import ErrorHandeling from './pages/ErrorHandelingPage/ErrorHandeling.js';
 import './navigation/MenuPageButtons/MenuPageButtons.css';
 
 // Using React.lazy to dynamically import the components
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "/iotum-samples/tabbed-dashboard",
     element: <TabbedDashboardApp />
+  },
+  {
+    path: "/iotum-samples/error-handeling",
+    element: <ErrorHandeling />
   },
 ]);
 

@@ -1,27 +1,33 @@
 .tokenButton {
-    /* shared styles */
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    border: none;
-    padding: 10px 20px;
-    font-weight: bold;
-    border-radius: 4px;
-    position: absolute; /* absolute positioning */
-    top: 30px;
-    z-index: 10; /* Ensure it's above other elements */
-    width: 120px;
-  }
-  
-  .tokenButton:hover {
-    background-color: #0056b3;
-  }
-  
-  .left {
-    left: 20px;
-  }
-  
-  .right {
-    right: 20px;
-  }
-  
+  /* shared styles */
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 4px;
+  position: absolute; /* absolute positioning */
+  z-index: 10; /* Ensure it's above other elements */
+  width: 120px;
+}
+
+.tokenButton:hover {
+  background-color: #0056b3;
+}
+
+.left {
+  left: 40px;
+  top: 30px;
+}
+
+.right {
+  right: 40px;
+  top: 30px;
+}
+
+.center {
+  margin-top: 20px; 
+}
+
+
