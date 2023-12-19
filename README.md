@@ -1,7 +1,7 @@
-# Iotum Sample Apps
+# SDK Sample Apps
 
 ## Overview
-Explore the capabilities of Iotum SDK products through this sample application. Access the app here: [Iotum Sample Apps](https://iotum.github.io/iotum-samples/).
+Explore the capabilities of SDK products through this sample application. Access the app here: [Sample Apps](https://iotum.github.io/iotum-samples/).
 
 ## Getting Started with the Application
 
