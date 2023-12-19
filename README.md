@@ -19,7 +19,7 @@ Explore the capabilities of Iotum SDK products through this sample application. 
 4. **Using the Application**:
    - Once logged in, you're ready to explore the various features of the Iotum product suite through the Menu page.
 
-> **Note:** For guidance on retrieving the SSO Token and Host ID via Postman, refer to the project's [Postman Documentation](https://github.com/iotum/iotum-samples/wiki/Get-SSO-Token-and-Host-ID-from-Postman).
+> **Note:** For guidance on retrieving the SSO Token and Host ID via Postman, refer to the project's [Postman Documentation](https://github.com/shirleyfyx/iotum-samples/wiki/Get-SSO-Token-and-Host-ID-from-Postman).
 
 ### Running a Sample App Locally:
 1. Modify your system's hosts file by adding "127.0.0.1 localhost.callbridge.com".
